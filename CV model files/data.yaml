@@ -1,0 +1,6 @@
+path: /home/cyhalek/Desktop/SolubilityCV/detect_dataset
+train: images/train
+val: images/val
+
+nc: 1  # number of classes
+names: ['vile']
