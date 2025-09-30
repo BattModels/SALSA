@@ -1,0 +1,303 @@
+:root {
+    --blue: #00274C;
+    --maize: #FFCB05;
+    --umma-tan: #EEE9DB;
+    --puma-black: #131516;
+    --angell-hall-ash: #D8DCD7;
+    --num-columns: 6;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+}
+
+h1 {
+    color: #000000;
+    text-align: center;
+}
+
+h2 {
+    color: #000000;
+}
+
+.top-menu-bar {
+    display: flex;
+    justify-content: flex-end; /* Spread items evenly */
+    align-items: center;
+    background-color: var(--blue); /* Dark background */
+    padding: 10px;
+    position: sticky;
+    top: 0; /* Stick to the top when scrolling */
+    z-index: 1000; /* Stay on top of other content */
+}
+
+.link {margin-right: 15px,;
+    color: var(--maize);
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 30px
+}
+
+.custom-button {
+    background-color: var(--blue);
+    color: var(--maize);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.halt-button {
+    background-color: #DD0000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.halt-button:hover {
+    background-color: #FF0000;
+}
+
+.custom-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.inside-container {
+    background-color: #ffffff;
+    width: 95%;
+    white-space: pre-wrap;
+    line-height: 1.8; 
+    margin: 0 auto;
+    border: 5px solid var(--puma-black);
+    padding: 40px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: 'flex';
+    flex-direction: 'row';
+}
+
+.list-container {
+    background-color: #ffffff;
+    margin: 0 auto;
+    border: 1px solid var(--angell-hall-ash);
+    border-radius: 5px;
+}
+
+/* Style each list item */
+.list-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: "pointer";
+    padding: "5px";
+}
+
+.list-item:hover {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #ccc;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: "5px";
+}
+
+.list-item-unselectable {
+    padding: 10px 15px;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: "5px";
+}
+
+/* Style for the active (selected) item */
+.list-item-selected {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: var(--angell-hall-ash);
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: "5px";
+}
+
+.list-item-selected:hover {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #ccc;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: "5px";
+}
+
+.selection-container {
+    background-color: var(--umma-tan);
+    width: 85%;
+    margin: 0 auto;
+    border: 10px solid var(--puma-black);
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: 'flex';
+    padding: '10px';
+    flex-direction: 'row';
+    height: auto
+}
+
+.graph-container {
+    background-color: var(--umma-tan);
+    margin: 0 auto;
+    border: 5px solid var(--puma-black);
+    border-radius: 3px;
+    display: 'flex';
+    padding: '10px';
+    flex-direction: 'row';
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-textfield {
+    flex: 1;
+    width: 90%; /* Set the width */
+    height: 20px;
+    padding: 10px; /* Add padding inside the textfield */
+    font-size: 14px; /* Adjust the font size */
+    border: 1px solid #ccc; /* Set border color */
+    border-radius: 5px; /* Add rounded corners */
+    background-color: #f9f9f9; /* Set background color */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Add inner shadow */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Add focus transition */
+}
+
+.custom-textfield:focus {
+    border-color: var(--blue); /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add glow effect */
+}
+
+#custom-checklist label {
+    font-size: 30px;
+}
+
+/* Style for the Upload Component */
+.upload {
+    width: 50%;
+    height: 60px;
+    line-height: 60px;
+    border-width: 2px;
+    border-style: dashed;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px auto;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+}
+
+.upload:hover {
+    background-color: #e0e0e0; /* Change background on hover */
+}
+
+/* Style the entire table */
+.dash-table-container .dash-spreadsheet-container {
+    font-size: 18px; /* Set font size for the table */
+}
+
+/* Style the header */
+.dash-table-container .dash-header {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #f4f4f4; /* Light gray background for header */
+}
+
+
+
+
+/* Style individual days */
+.CalendarDay {
+    border: 1px solid #e4e7e7; /* Border for calendar days */
+    background-color: #ffffff; /* Default background */
+    color: #000; /* Text color */
+}
+
+/* Style hovered days */
+.CalendarDay__hovered_span {
+    background: var(--blue); /* Highlight hovered day */
+    color: #ffffff; /* Text color for hovered day */
+}
+
+/* Style selected day */
+.CalendarDay__selected {
+    background: var(--blue); /* Background for selected day */
+    color: var(--maize); /* Text color for selected day */
+}
+
+.CalendarDay__selected:hover {
+    background: #0056b3; /* Background for selected day */
+    border-color:#ddd;
+    color: var(--maize); /* Text color for selected day */
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before {
+    border-top: 26px solid transparent;
+    border-right: 33px solid var(--blue);
+    bottom: 0;
+    right: 0;
+  }
+
+.DayPickerKeyboardShortcuts_showSpan {
+    color: var(--maize);
+    position: absolute;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {
+    border-right-color: #0056b3; /* New hover color for the triangle */
+}
+
+.DateInput {
+    width: 90%; /* Set the width */
+    height: 40px;
+    font-size: 14px; /* Adjust the font size */
+    border: 1px solid #ccc; /* Set border color */
+    border-radius: 5px; /* Add rounded corners */
+    background-color: #f9f9f9; /* Set background color */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Add inner shadow */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Add focus transition */
+}
+
+.DateInput_input {
+    width: 112%; /* Set the width */
+    height: 105%;
+    font-size: 14px; /* Adjust the font size */
+    border: 1px solid #ccc; /* Set border color */
+    border-radius: 5px; /* Add rounded corners */
+    background-color: #f9f9f9; /* Set background color */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Add inner shadow */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Add focus transition */
+}
+
+.DateInput_input__focused {
+    border-bottom: 2px solid var(--blue);
+}
