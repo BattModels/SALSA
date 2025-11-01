@@ -14,3 +14,7 @@ you can enable GitHub’s built-in 3D viewer like this:
 
 ```markdown
 ➡️ [Download or View 3D Model (STL)](models/salsa.stl)
+
+
+
+![SALSA 3D Preview](SALSA Demo.mp4)
