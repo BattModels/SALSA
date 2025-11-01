@@ -11,5 +11,6 @@ Click the "View on Tinkercad" badge above to download and explore the interactiv
 ### 📂 Download
 Subcomponents of SALSA can be downloaded in the SALSA CAD folder in the form of STL file.
 
-
-
+### 💻 Code
+Computer vision models related codes can be found at CV model files.
+Pipeline related codes can be found at Pipeline files.
