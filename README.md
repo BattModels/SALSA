@@ -12,12 +12,4 @@ Click the "View on Tinkercad" badge above to download and explore the interactiv
 The CAD files can also be downloaded at (SALSA/SALSA CAD)
 
 
-<video src="SALSA demo.mp4" controls width="600"></video>
-
-
-
-```markdown
-➡️ [Download or View 3D Model (STL)](SALSA CAD/SALSA doser + stirrer.stl)
-
-
 
