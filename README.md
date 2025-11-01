@@ -12,9 +12,12 @@ Click the "View on Tinkercad" badge above to explore the interactive 3D model di
 Once you add your STL file to this repository (for example, `models/salsa.stl`),  
 you can enable GitHub’s built-in 3D viewer like this:
 
+
+![SALSA 3D Preview](SALSA Demo.mp4)
+
+
 ```markdown
 ➡️ [Download or View 3D Model (STL)](models/salsa.stl)
 
 
 
-![SALSA 3D Preview](SALSA Demo.mp4)
