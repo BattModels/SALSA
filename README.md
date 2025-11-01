@@ -9,7 +9,7 @@ This CAD design, created in **Tinkercad**, illustrates the SALSA system layout.
 Click the "View on Tinkercad" badge above to explore the interactive 3D model directly in Tinkercad.
 
 ### 📂 Download
-The CAD files can also be downloaded 
+The CAD files can also be downloaded at (SALSA/SALSA CAD)
 
 
 <video src="SALSA demo.mp4" controls width="600"></video>
