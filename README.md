@@ -17,7 +17,7 @@ The CAD files can also be downloaded at (SALSA/SALSA CAD)
 
 
 ```markdown
-➡️ [Download or View 3D Model (STL)](SALSA/SALSA CAD)
+➡️ [Download or View 3D Model (STL)](SALSA CAD/SALSA doser + stirrer.stl)
 
 
 
