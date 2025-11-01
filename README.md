@@ -8,9 +8,8 @@
 This CAD design, created in **Tinkercad**, illustrates the SALSA system layout.  
 Click the "View on Tinkercad" badge above to explore the interactive 3D model directly in Tinkercad.
 
-### 📂 Optional (if you export your STL)
-Once you add your STL file to this repository (for example, `models/salsa.stl`),  
-you can enable GitHub’s built-in 3D viewer like this:
+### 📂 Download
+The CAD files can also be downloaded 
 
 
 <video src="SALSA demo.mp4" controls width="600"></video>
