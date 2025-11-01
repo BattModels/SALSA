@@ -13,7 +13,7 @@ Once you add your STL file to this repository (for example, `models/salsa.stl`),
 you can enable GitHub’s built-in 3D viewer like this:
 
 
-![SALSA 3D Preview](SALSA Demo.mp4)
+![SALSA 3D Preview](SALSA/SALSA Demo.mp4)
 
 
 ```markdown
