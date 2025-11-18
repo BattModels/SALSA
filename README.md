@@ -8,6 +8,13 @@
 This CAD design, created in **Tinkercad**, illustrates the SALSA system layout.  
 Click the "View on Tinkercad" badge above to download and explore the interactive 3D model directly in Tinkercad.
 
+### 💡 Digital Twins
+![Figure caption](Digital Twin.jpeg)
+This CAD design, created in **Tinkercad**, illustrates the SALSA system layout.  
+Omniverse Example: (a) Digital Twin of Clio and SALSA in Omniverse (b) Physical Setup of Clio and SALSA in the lab
+
+
+
 ### 📂 Download
 Subcomponents of SALSA can be downloaded in the SALSA CAD folder in the form of STL file.
 
