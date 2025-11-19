@@ -16,8 +16,8 @@ Left: digital twin of SALSA in Omniverse
 Right: physical setup of SALSA in the lab 
 
 ### 📂 Download
-Subcomponents of SALSA can be downloaded in the SALSA CAD folder in the form of STL file.
-[SALSA CAD](SALSA%20CAD/)
+Subcomponents of SALSA can be downloaded in the [SALSA CAD](SALSA%20CAD/) folder in the form of STL file.
+
 
 ### 💻 Code
 Computer vision models related codes can be found at CV model files.
