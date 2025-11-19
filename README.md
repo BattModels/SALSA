@@ -27,6 +27,9 @@ Pipeline related codes can be found at [Pipeline files](Pipeline%20files/) folde
 All experimental data used in this study are available in the CSV file: [NaFSI.csv](NaFSI.csv)  
 This file includes columns for experiment ID, temperature in degree celsius, date of experiment, mass percentage of solvent(s) used in %, and solubility value in grams per 100 grams of solvent.  
 
+### 🎥 Video Demo
+A video demonstration of the system is provided in [SALSA Demo Video.mp4](SALSA%20Demo%20Video.mp4)
+
 
 ### 📄 Preprint
 Our work has been posted on ChemRxiv:  
