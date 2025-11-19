@@ -23,6 +23,4 @@ Pipeline related codes can be found at Pipeline files.
 
 ### 📄 Preprint
 Our work has been posted on ChemRxiv:  
-**“<Your Title Here>”**  
-<Your Name> et al.  
 🔗 [https://chemrxiv.org/engage/chemrxiv/article-details/<ID>](https://chemrxiv.org/engage/chemrxiv/article-details/6906695eef936fb4a2c79d07)
