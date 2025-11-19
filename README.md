@@ -23,6 +23,13 @@ Subcomponents of SALSA can be downloaded in the [SALSA CAD](SALSA%20CAD/) folder
 Computer vision models related codes can be found at [CV model files](CV%20model%20files/) folder.  
 Pipeline related codes can be found at [Pipeline files](Pipeline%20files/) folder.
 
+### 📊 CSV Data
+All experimental data used in this study are available in the CSV file: [NaFSI.csv](NaFSI.csv)
+
+This file includes columns for timestamps, sensor readings, and calculated values.  
+You can load it directly using Python, R, or other data analysis tools.
+
+
 ### 📄 Preprint
 Our work has been posted on ChemRxiv:  
 🔗 [https://chemrxiv.org/engage/chemrxiv/article-details/<ID>](https://chemrxiv.org/engage/chemrxiv/article-details/6906695eef936fb4a2c79d07)
