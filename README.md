@@ -28,8 +28,8 @@ All experimental data used in this study are available in the CSV file: [NaFSI.c
 This file includes columns for experiment ID, temperature in degree celsius, date of experiment, mass percentage of solvent(s) used in %, and solubility value in grams per 100 grams of solvent.  
 
 ### 🎥 Video Demo
-A 1-minute video demonstration of the system is provided in [SALSA Demo Video.mp4](SALSA%20Demo%20Video.mp4)
-
+A 1-minute video demonstration of the system is provided in [SALSA Demo Video.mp4](SALSA%20Demo%20Video.mp4)  
+Also, a quick Omniverse digital twin demonstration video can ba found at [Omniverse.mp4](Omniverse.mp4)
 
 ### 📄 Preprint
 Our work has been posted on ChemRxiv:  
