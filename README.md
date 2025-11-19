@@ -17,6 +17,7 @@ Right: physical setup of SALSA in the lab
 
 ### 📂 Download
 Subcomponents of SALSA can be downloaded in the SALSA CAD folder in the form of STL file.
+[CAD](./SALSA CAD)
 
 ### 💻 Code
 Computer vision models related codes can be found at CV model files.
