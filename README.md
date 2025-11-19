@@ -24,10 +24,8 @@ Computer vision models related codes can be found at [CV model files](CV%20model
 Pipeline related codes can be found at [Pipeline files](Pipeline%20files/) folder.
 
 ### 📊 CSV Data
-All experimental data used in this study are available in the CSV file: [NaFSI.csv](NaFSI.csv)
-
-This file includes columns for timestamps, sensor readings, and calculated values.  
-You can load it directly using Python, R, or other data analysis tools.
+All experimental data used in this study are available in the CSV file: [NaFSI.csv](NaFSI.csv)  
+This file includes columns for experiment ID, temperature in degree celsius, date of experiment, mass percentage of solvent(s) used in %, and solubility value in grams per 100 grams of solvent.  
 
 
 ### 📄 Preprint
