@@ -11,7 +11,9 @@ Click the "View on Tinkercad" badge above to download and explore the interactiv
 ### 💡 Digital Twins
 <img src="Digital_Twin.jpeg" width="800">
 In addition to CAD file, we also create an Omniverse digital twin for SALSA.
+
 Left: Digital Twin of Clio and SALSA in Omniverse
+
 Right: Physical Setup of Clio and SALSA in the lab 
 
 
