@@ -1,4 +1,4 @@
-## 🌶️💃 SALSA (SALt Solubility Asseseement) Overview
+## 🌶️💃 SALSA (SALt Solubility Assessment) Overview
 
 ![Figure caption](SALSA.png)
 
