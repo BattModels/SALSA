@@ -20,8 +20,8 @@ Subcomponents of SALSA can be downloaded in the [SALSA CAD](SALSA%20CAD/) folder
 
 
 ### 💻 Code
-Computer vision models related codes can be found at CV model files.
-Pipeline related codes can be found at Pipeline files.
+Computer vision models related codes can be found at [CV model files](CV%20model%20files/) folder.  
+Pipeline related codes can be found at [Pipeline files](Pipeline%20files/) folder.
 
 ### 📄 Preprint
 Our work has been posted on ChemRxiv:  
