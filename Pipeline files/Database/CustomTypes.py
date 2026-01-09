@@ -6,6 +6,7 @@ class CustomType:
         self.structureValue = None
         self.select = selectstructure
         self.displayMethod = displayMethod
+        self.structureValue = 'value'
 
     def verify(self, property, input):
         return self.check(property, input)
