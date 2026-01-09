@@ -18,7 +18,11 @@ from dash.exceptions import PreventUpdate
 import multiprocessing
 from multiprocessing import Process, freeze_support, Queue
 import logging
+import Agent.Agent as ChatAgent
 import shutil
+import threading
+from Agent.Experiment_Tools import get_error_status, resolve
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = current_dir
 sys.path.insert(0, parent_dir)
@@ -37,11 +41,20 @@ trial = 0
 IMAGE_HEIGHT = 450
 stored_figure = []
 
+agent = ChatAgent.Agent()
 
+def agent_worker(request_q: Queue, response_q: Queue):
+    #agent.start_thread(request_q)
+    while True:
+        user_message = request_q.get()
+        print(user_message)
+        if user_message == "STOP":
+            break
+        response = agent.conversation_with_agent(user_message)
+        response_q.put(response)
 
 def update_message_after_solubility_measurement(compositionID, salt, experiment_status):
     experiment_status["trial"] = 1
-    print('here')
     current_time = datetime.now()
     log_file_name = current_time.strftime("%Y-%m-%d %H-%M-%S") + ".log"
     log_file_name = os.path.join(current_dir, '..', 'Logs', log_file_name)
@@ -95,7 +108,11 @@ if __name__ == '__main__':
     experiment_status["history"].append({'sender': 'Agent', 'text': 'Start your conversation.'})
     experiment_status["queue"] = manager.list()
 
+    # Create a thread instead of a process
+    agent_thread = threading.Thread(target=agent_worker, args=(agent.request_q, agent.response_q), daemon=True)
 
+    # Start the thread
+    agent_thread.start()
     # Define the layout of the app
     app.layout = html.Div([
             html.Div(children=[dcc.Location(id='url', refresh=False),
@@ -304,16 +321,22 @@ if __name__ == '__main__':
     )
     def tester(n_intervals):
         global process
-
-        
+        temp_file_dir = os.path.join(parent_dir, 'Temp.json')
+        if os.path.exists(temp_file_dir):
+            with open(temp_file_dir, 'r') as f:
+                data_list = json.load(f)
+            if len(data_list):
+                agent.add_bulk_to_queue(data_list)
+            os.remove(temp_file_dir)
+        '''
         if (experiment_status["is_running"] == "No experiment is running") and experiment_status["result"] == "No errors":
             if experiment_status["pop"]:
-                id_queue.popleft()
+                agent.monitor_agent.id_queue.popleft()
                 experiment_status["pop"] = False
-            if len(id_queue) and experiment_status["result"] == "No errors":
+            if len(agent.monitor_agent.id_queue) and experiment_status["result"] == "No errors":
                 experiment_status["is_running"] = "Running experiments"
-                process = Process(target=update_message_after_experiment, args=(id_queue[0], experiment_status))
-                process.start()
+                process = Process(target=update_message_after_experiment, args=(agent.monitor_agent.id_queue[0], experiment_status))
+                process.start()'''
 
     # Switch page function
     @app.callback(
@@ -361,11 +384,100 @@ if __name__ == '__main__':
             return test_solubility_content
         elif pathname == '/solubility-database-page':
             return solubility_database_content
+        elif pathname == '/agent-page':
+            agent_content = html.Div([
+                html.H1("Chat with Agent!"),
+                html.Div(children=[html.Div(id='chat-box', style={
+                    'border': '1px solid #ccc',
+                    'padding': '10px',
+                    'minHeight': '400px',     # prevents collapsing
+                    'maxHeight': '80vh', 
+                    'width': '80%', 
+                    'overflowY': 'scroll',
+                    'whiteSpace': 'pre-line',
+                    'backgroundColor': '#f9f9f9'
+                }),
+                html.Div(children=[
+                dcc.Input(id='user-input', type='text', className='custom-textfield', placeholder='Type your message...', style={'width': '80%'}),
+                html.Button('Send', id='send-button', className="custom-button", n_clicks=0, disabled=experiment_status['history'][-1]['sender'] == 'Human')],
+                style={
+                    'display': 'flex',
+                    'justifyContent': 'center',
+                    'alignItems': 'center',
+                    'width': '80%',
+                    'maxWidth': '800px',
+                    'margin': '0 auto'
+                })],
+                className='selection-container', style={
+                        "display": "flex",                # Use flexbox
+                        "justifyContent": "center",       # Center table horizontally
+                        "align-items": "center",
+                        "flex-direction": "column"
+                }),
+                # Store the chat log in browser memory
+                dcc.Store(id='chat-store', data=[]),
+                dcc.Interval(
+                                id="agent-interval",
+                                interval=200,  # Update every 5 seconds
+                                n_intervals=0
+                            )
+                ])
+            return agent_content
         else:
             return home_content
 
+    @app.callback(
+        Output('user-input', 'value'),
+        Input('send-button', 'n_clicks'),
+        Input('user-input', 'n_submit'),  # Trigger when Enter is pressed
+        State('user-input', 'value'),
+        prevent_initial_call=True
+    )
+    def update_chat(n_clicks, n_submit, user_message):
+        if user_message:
+            experiment_status['history'].append({'sender': 'Human', 'text': user_message})
 
+            agent.request_q.put(user_message)
+        return ''
 
+    @app.callback(
+        [Output('chat-box', 'children'), Output('send-button', 'disabled')],
+        Input('agent-interval', 'n_intervals'),
+        prevent_initial_call=True
+    )
+    def display_chat(n_intervals):
+        chat_elements = []
+        # Wait for response (with timeout handling if desired)
+        try:
+            ai_response = agent.response_q.get(timeout=0.1)
+            experiment_status['history'].append({'sender': 'Agent', 'text': ai_response})
+        except Exception:
+            pass
+        for msg in experiment_status['history']:
+            style = {
+                'margin': '10px 0',          # space between messages
+                'padding': '8px 12px',       # padding inside the message bubble
+                'borderRadius': '8px',
+                'maxWidth': '75%',
+                'wordWrap': 'break-word',
+            }
+
+            if msg['sender'] == 'Human':
+                style['color'] = '#00274C'
+                style['textAlign'] = 'right'
+                style['marginLeft'] = 'auto'      # push to right
+                style['paddingRight'] = '20px'    # indent from right edge
+                style['paddingLeft'] = '40px'     # small gap on left side
+            else:
+                style['color'] = '#B8860B'
+                style['textAlign'] = 'left'
+                style['marginRight'] = 'auto'
+                style['paddingLeft'] = '20px'     # indent from left edge
+                style['paddingRight'] = '40px'    # small gap on right side
+
+            chat_elements.append(html.Div(f"{msg['text']}", style=style))
+        
+        return chat_elements, experiment_status['history'][-1]['sender'] == 'Human'
     
     # Functions for measure solubility page
     @callback([Output('solubility-solvent-alert', 'is_open'),
@@ -460,7 +572,7 @@ if __name__ == '__main__':
         prevent_initial_call=True
     )
     def show_solubility_table(n_clicks, form_elements):
-        options, df = generate_options_df(form_elements, db_file=SOLUBILITY_DB)
+        options, df = generate_options_df(form_elements, variable_df=SOLUBILITY_INPUT, db_file=SOLUBILITY_DB)
         df = df.rename(columns=dict(zip(SOLUBILITY_INPUT['Property'], [f'{p} ({u})' for p, u in zip(SOLUBILITY_INPUT['Property'], SOLUBILITY_INPUT['Units']) if u != ''])))
         df.rename(columns={col: f"{col} (g/100mL)" for col in df.columns if "_Solubility" in col}, inplace=True)
         buffer = StringIO()
@@ -485,7 +597,7 @@ if __name__ == '__main__':
     )
     def show_graph_2d(n_clicks, form_elements=None):
         # Extract selected options from form_elements
-        options, df = generate_options_df(form_elements, db_file=SOLUBILITY_DB)
+        options, df = generate_options_df(form_elements, variable_df=SOLUBILITY_INPUT, db_file=SOLUBILITY_DB)
         solubility_names = [col for col in df.columns if col.endswith('_Solubility')]
         variable_names = set(df.columns.tolist())
         variable_names.discard('ID')
@@ -500,7 +612,7 @@ if __name__ == '__main__':
     )
     def show_graph_3d(n_clicks, form_elements=None):
         # Extract selected options from form_elements
-        options, df = generate_options_df(form_elements, db_file=SOLUBILITY_DB)
+        options, df = generate_options_df(form_elements, variable_df=SOLUBILITY_INPUT, db_file=SOLUBILITY_DB)
         solubility_names = [col for col in df.columns if col.endswith('_Solubility')]
         variable_names = set(df.columns.tolist())
         variable_names.discard('ID')
@@ -647,8 +759,8 @@ if __name__ == '__main__':
             # Update the message to "Running experiment"
             # Run the experiment in a separate thread to avoid blocking the UI
         global selected_element
-        update = 1 <= selected_element and get_queue_length() > selected_element
-        result = add_to_queue(compositionID)
+        update = 1 <= selected_element and agent.get_queue_length() > selected_element
+        result = agent.add_to_queue(compositionID)
         if result == "No errors" and update:
             selected_element += 1
         if result == "No errors":
@@ -665,8 +777,8 @@ if __name__ == '__main__':
     )
     def delete_button(n_clicks):
         if n_clicks:
-            if get_queue_length() != selected_element or experiment_status["is_running"] != "Running experiments": # Cannot delete a composition which is in the middle of an experiment
-                delete_ith_element(get_queue_length() - selected_element)
+            if agent.get_queue_length() != selected_element or experiment_status["is_running"] != "Running experiments": # Cannot delete a composition which is in the middle of an experiment
+                agent.delete_ith_element(agent.get_queue_length() - selected_element)
 
     # When Clio runs into an error, it will not continue running the experiment. Click on the button to indicate the error is resolved and Clio will continue doing experiments.
     @app.callback(
@@ -678,6 +790,7 @@ if __name__ == '__main__':
             # Run the experiment in a separate thread to avoid blocking the UI
         experiment_status["result"] = "No errors"
         experiment_status["is_running"] = "No experiment is running"
+        resolve()
 
     # Main function to track the status of Clio. Updates every 0.1s. It should update the experiment status and the queue.
     @app.callback(
@@ -692,8 +805,8 @@ if __name__ == '__main__':
     def update_experiment_status(n_intervals):
         queue_items = []
         global process
-        for i, item in enumerate(list(id_queue)):
-            if i == get_queue_length() - selected_element:
+        for i, item in enumerate(list(agent.monitor_agent.id_queue)):
+            if i == agent.get_queue_length() - selected_element:
                 queue_items.append(html.Div(item, className='list-item-selected', id={"type": "item", "index": i}))
 
             else:
@@ -702,12 +815,12 @@ if __name__ == '__main__':
             queue_items.append(html.Div('Nothing in queue', className='list-item-unselectable', disable_n_clicks=True))
         if experiment_status["is_running"] != "No experiment is running":
             # Running experiments, no error encountered
-            return experiment_status["is_running"], experiment_status["result"], queue_items, True, f'{get_queue_length()} experiments to be done'
-        elif len(id_queue) and experiment_status["result"] == "No errors":
-            return 'Running experiments', experiment_status["result"], queue_items, True, f'{get_queue_length()} experiments to be done'
+            return experiment_status["is_running"], get_error_status(), queue_items, True, f'{agent.get_queue_length()} experiments to be done'
+        elif len(agent.monitor_agent.id_queue) and get_error_status() == "No errors":
+            return 'Running experiments', get_error_status(), queue_items, True, f'{agent.get_queue_length()} experiments to be done'
         else:
-            result_message = experiment_status["result"]
-            return "No experiment is running", result_message, queue_items, result_message == "No errors", f'{get_queue_length()} experiments to be done'
+            result_message = get_error_status()
+            return "No experiment is running", result_message, queue_items, result_message == "No errors", f'{agent.get_queue_length()} experiments to be done'
     
     @app.callback(
         Output("Running-status", 'children'),
@@ -732,7 +845,7 @@ if __name__ == '__main__':
         global selected_element
         if any(n_clicks):
             index = [i for i, click in enumerate(n_clicks) if click][0]
-            selected_element = get_queue_length() - index # indicates the last but i-1 elements is selected. Why? Because when one ID leaves the queue, the number of compositions after the selected element in the queue will remain the same.
+            selected_element = agent.get_queue_length() - index # indicates the last but i-1 elements is selected. Why? Because when one ID leaves the queue, the number of compositions after the selected element in the queue will remain the same.
         
     # Upload multiple compositionIDs into the queue
     @app.callback([Output('run-input-alert', "children", allow_duplicate=True),
@@ -745,8 +858,8 @@ if __name__ == '__main__':
         global selected_element
         if contents is not None:
             ids = parse_run_ids(contents, filename)
-            update = 1 <= selected_element and get_queue_length() > selected_element
-            result = add_bulk_to_queue(ids)
+            update = 1 <= selected_element and agent.get_queue_length() > selected_element
+            result = agent.add_bulk_to_queue(ids)
             if result == "No errors" and update:
                 selected_element += len(ids)
                 return result, False, None
@@ -854,7 +967,7 @@ if __name__ == '__main__':
         return form_elements
 
     # Read the selected options
-    def generate_options_df(form_elements, db_file=DEFAULT_DB):
+    def generate_options_df(form_elements, variable_df=ALL_INPUT, db_file=DEFAULT_DB):
         options = {}
         for current in form_elements:
             # Logic to extract the eselected elements within the given structure
@@ -868,13 +981,14 @@ if __name__ == '__main__':
                     current_label = current_structure[0]['props']['value'][0]
                     options[column_name][current_label] = {}
 
-                    if len( ALL_INPUT.loc[ALL_INPUT['Property'] == current_label, 'Type'].values) > 0:
-                        current_type = ALL_INPUT.loc[ALL_INPUT['Property'] == current_label, 'Type'].values[0]
+                    if len( variable_df.loc[variable_df['Property'] == current_label, 'Type'].values) > 0:
+                        current_type = variable_df.loc[variable_df['Property'] == current_label, 'Type'].values[0]
                         min_value = current_type.verify(current_label, current_structure[1]['props']['children'][1]['props'][current_type.structureValue])
                         options[column_name][current_label]['min'] = None if isinstance(min_value, str) else min_value
                         max_value = current_type.verify(current_label, current_structure[1]['props']['children'][3]['props'][current_type.structureValue])
                         options[column_name][current_label]['max'] = None if isinstance(max_value, str) else max_value
                     else:
+                        print(current_structure[1]['props']['children'][0])
                         options[column_name][current_label]['min'] = current_structure[1]['props']['children'][0]['props']['children'][1]['props']['value']
                         options[column_name][current_label]['max'] = current_structure[2]['props']['children'][0]['props']['children'][1]['props']['value']
         df = generate_df(options, db_file)
