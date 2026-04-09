@@ -32,5 +32,5 @@ A 1-minute video demonstration of the system is provided in [SALSA Demo Video.mp
 Also, a quick Omniverse digital twin demonstration video can ba found at [Omniverse.mp4](Omniverse.mp4)
 
 ### 📄 Publication
-Our work is published on ChemRxiv:  
+Our work is published on Digital Discovery:  
 🔗 [https://pubs.rsc.org/en/content/articlelanding/2026/dd/d5dd00516g](https://pubs.rsc.org/en/content/articlelanding/2026/dd/d5dd00516g)
