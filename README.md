@@ -31,6 +31,6 @@ This file includes columns for experiment ID, temperature in degree celsius, dat
 A 1-minute video demonstration of the system is provided in [SALSA Demo Video.mp4](SALSA%20Demo%20Video.mp4)  
 Also, a quick Omniverse digital twin demonstration video can ba found at [Omniverse.mp4](Omniverse.mp4)
 
-### 📄 Preprint
-Our work has been posted on ChemRxiv:  
-🔗 [https://chemrxiv.org/engage/chemrxiv/article-details/<ID>](https://chemrxiv.org/engage/chemrxiv/article-details/6906695eef936fb4a2c79d07)
+### 📄 Publication
+Our work is published on ChemRxiv:  
+🔗 [https://pubs.rsc.org/en/content/articlelanding/2026/dd/d5dd00516g](https://pubs.rsc.org/en/content/articlelanding/2026/dd/d5dd00516g)
